@@ -7,5 +7,41 @@
 </head>
 <body>
     <p>Todo: Create code</p>
+    <form>
+	<fieldset>
+        <legend>Tone Options</legend>
+        <fieldset> 
+            <legend>Tone (Hz)</legend>
+            <input type="range" id="frequencyRange" oninput="updateFrequency(this.value)"></input>
+            <input type="number" id="frequencyNum" oninput="updateFrequency(this.value)"></input>
+        </fieldset>
+        <fieldset>
+            <legend>Tone Volume</legend>
+            <input type="range" id="volumeRange" oninput="updateVolume(this.value)"></input>
+            <input type="number" id="volumeNum" oninput="updateVolume(this.value)"></input>
+        </fieldset>
+	</fieldset>
+        <fieldset>
+            <legend>Send Options</legend>
+                <fieldset>
+                    <legend>Send Speed</legend>
+                </fieldset>
+        
+
+            
+
+        </fieldset>
+    </form>
+    <!-- Okay, To start with I think I want to have some simple settings here:
+        - Enabled Alphabet
+        - Type of example to send
+            - ie, one letter at a time, 3 letter groups, real sentences? 
+            - Maybe Have this as a preset of some sort?  
+        - Send speed (wpm)
+        - Pitch setting
+        - QRM?
+        -->
+    <script src="./morsetutor.js">
+    </script>
 </body>
 </html>
