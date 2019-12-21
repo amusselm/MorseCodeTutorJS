@@ -43,6 +43,36 @@ var sendOptions = {
     }
 }
 
+function Letter(display, morse) {
+    this.display = display;
+    this.morse = morse;
+    var enabled = false;
+    
+    this.getInnerHtml = function() {
+        let listTag = document.createElement("li");
+        listTag.innerHTML = this.display;
+
+        let inputTag = document.createElement("input");
+        inputTag.setAttribute('type','checkbox');
+        inputTag.addEventListener('click',this.toggle);
+        listTag.appendChild(inputTag);
+        return listTag;
+    }
+
+    this.toggle = function () {
+        enabled = !enabled;
+    }
+
+}
+
+var alphabet = [
+    new Letter("a",".-"),
+    new Letter("b","-...")
+];
+
+
+
+
 function init() {
     document.getElementById("frequencyRange").min = tone.frequencyMin;
     document.getElementById("frequencyNum").min = tone.frequencyMin;
@@ -59,10 +89,18 @@ function init() {
     document.getElementById("sendSpeedRange").max = sendOptions.maxSendSpeed;
     document.getElementById("sendSpeedNum").min = sendOptions.minSendSpeed;
     document.getElementById("sendSpeedNum").max = sendOptions.maxSendSpeed;
+
+    let alphabetFieldset = document.getElementById("alphabet");
+    alphabet.forEach(function(element) {
+        alphabetFieldset.appendChild(element.getInnerHtml());
+    });
+
+    //Default values, forces setters to be called. 
+    tone.frequency = 440;
+    tone.volume = 50;
+    sendOptions.speed = 15;
 }
 
 init();
 
-tone.frequency = 440;
-tone.volume = 50;
-sendOptions.speed = 15;
+
