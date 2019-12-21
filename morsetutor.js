@@ -14,6 +14,10 @@ var updateSendSpeed = function(sendSpeedInput) {
 var tone = {
     frequency : 440,
     volume : 15,
+    frequencyMin : 15,
+    frequencyMax : 2000,
+    maxVolume : 100,
+    minVolume : 0,
 
     set frequency(newFreq) {
         document.getElementById("frequencyRange").value = newFreq;
@@ -30,6 +34,8 @@ var tone = {
 
 var sendOptions = {
     speed : 15,
+    maxSendSpeed : 150,
+    minSendSpeed : 5,
 
     set speed(newSpeed) {
         document.getElementById("sendSpeedRange").value = newSpeed;
@@ -38,27 +44,21 @@ var sendOptions = {
 }
 
 function init() {
-    var frequencyMin = 15;
-    var frequencyMax = 2000;
-    document.getElementById("frequencyRange").min = frequencyMin;
-    document.getElementById("frequencyNum").min = frequencyMin;
-    document.getElementById("frequencyRange").max = frequencyMax;
-    document.getElementById("frequencyNum").max = frequencyMax;
+    document.getElementById("frequencyRange").min = tone.frequencyMin;
+    document.getElementById("frequencyNum").min = tone.frequencyMin;
+    document.getElementById("frequencyRange").max = tone.frequencyMax;
+    document.getElementById("frequencyNum").max = tone.frequencyMax;
 
 
-    var maxVolume = 100;
-    var minVolume = 0;
-    document.getElementById("volumeRange").max = maxVolume;
-    document.getElementById("volumeNum").min = minVolume;
-    document.getElementById("volumeRange").max = maxVolume;
-    document.getElementById("volumeNum").min = minVolume;
+    document.getElementById("volumeRange").max = tone.maxVolume;
+    document.getElementById("volumeNum").min = tone.minVolume;
+    document.getElementById("volumeRange").max = tone.maxVolume;
+    document.getElementById("volumeNum").min = tone.minVolume;
 
-    var maxSendSpeed = 150;
-    var minSendSpeed = 5;
-    document.getElementById("sendSpeedRange").min = minSendSpeed;
-    document.getElementById("sendSpeedRange").max = maxSendSpeed;
-    document.getElementById("sendSpeedNum").min = minSendSpeed;
-    document.getElementById("sendSpeedNum").max = maxSendSpeed;
+    document.getElementById("sendSpeedRange").min = sendOptions.minSendSpeed;
+    document.getElementById("sendSpeedRange").max = sendOptions.maxSendSpeed;
+    document.getElementById("sendSpeedNum").min = sendOptions.minSendSpeed;
+    document.getElementById("sendSpeedNum").max = sendOptions.maxSendSpeed;
 }
 
 init();
