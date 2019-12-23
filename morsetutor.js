@@ -43,35 +43,56 @@ var sendOptions = {
     }
 }
 
+
+
 function Letter(display, morse) {
     this.display = display;
     this.morse = morse;
-    var enabled = false;
-    
-    this.getInnerHtml = function() {
-        let listTag = document.createElement("li");
-        listTag.innerHTML = this.display;
-
-        let inputTag = document.createElement("input");
-        inputTag.setAttribute('type','checkbox');
-        inputTag.addEventListener('click',this.toggle);
-        listTag.appendChild(inputTag);
-        return listTag;
-    }
-
-    this.toggle = function () {
-        enabled = !enabled;
-    }
-
+    this.enabled = false; 
 }
+
+Letter.prototype.getInnerHtml = function() {
+    let listTag = document.createElement("li");
+    listTag.innerHTML = this.display;
+
+    let inputTag = document.createElement("input");
+    inputTag.setAttribute('type','checkbox');
+    inputTag.addEventListener('click',this.toggle.bind(this));
+    listTag.appendChild(inputTag);
+    return listTag;
+};
+
+Letter.prototype.toggle = function() {
+    this.enabled = !this.enabled;
+    if (this.enabled) {
+        enabledAlphabet.push(this); 
+        console.log(this);
+    }  else {
+        let idx = enabledAlphabet.indexOf(this);
+        enabledAlphabet.splice(idx, 1);
+    }
+    console.log(enabledAlphabet);
+
+};
 
 var alphabet = [
     new Letter("a",".-"),
     new Letter("b","-...")
 ];
 
+var enabledAlphabet = [];
 
-
+function sendRandomLetter() {
+    if (enabledAlphabet.length > 0) {
+        let rand = Math.random();
+        let scaledRand = rand * enabledAlphabet.length;
+        let idx = Math.floor(scaledRand);
+        console.log(enabledAlphabet[idx]);
+        alert(enabledAlphabet[idx].display);
+    } else {
+        alert("No letters selected");
+    }
+}
 
 function init() {
     document.getElementById("frequencyRange").min = tone.frequencyMin;
@@ -91,8 +112,9 @@ function init() {
     document.getElementById("sendSpeedNum").max = sendOptions.maxSendSpeed;
 
     let alphabetFieldset = document.getElementById("alphabet");
-    alphabet.forEach(function(element) {
-        alphabetFieldset.appendChild(element.getInnerHtml());
+    alphabet.forEach(function(letter) {
+        console.log(letter);
+        alphabetFieldset.appendChild(letter.getInnerHtml());
     });
 
     //Default values, forces setters to be called. 
