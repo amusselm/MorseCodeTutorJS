@@ -13,21 +13,21 @@
             <legend>Tone Options</legend>
             <fieldset> 
                 <legend>Tone (Hz)</legend>
-                <input type="range" id="frequencyRange" oninput="updateFrequency(this.value)"></input>
+                <input type="range" id="frequencyRange" oninput="morseTutorUi.updateFrequency(this.value)"></input>
                 <input type="number" id="frequencyNum" oninput="updateFrequency(this.value)"></input>
             </fieldset>
             <fieldset>
                 <legend>Tone Volume</legend>
-                <input type="range" id="volumeRange" oninput="updateVolume(this.value)"></input>
-                <input type="number" id="volumeNum" oninput="updateVolume(this.value)"></input>
+                <input type="range" id="volumeRange" oninput="morseTutorUi.updateVolume(this.value)"></input>
+                <input type="number" id="volumeNum" oninput="morseTutorUi.updateVolume(this.value)"></input>
             </fieldset>
         </fieldset>
         <fieldset>
             <legend>Send Options</legend>
             <fieldset>
                 <legend>Send Speed (WPM)</legend>
-                <input type="range" id="sendSpeedRange" oninput="updateSendSpeed(this.value)"></input>
-                <input type="number" id="sendSpeedNum" oninput="updateSendSpeed(this.value)"></input>
+                <input type="range" id="sendSpeedRange" oninput="morseTutorUi.updateSendSpeed(this.value)"></input>
+                <input type="number" id="sendSpeedNum" oninput="morseTutorUi.updateSendSpeed(this.value)"></input>
             </fieldset>
             <fieldset>
                 <legend>Group Size (letters)</legend>
@@ -46,7 +46,7 @@
         </fieldset>
         <fieldset>
             <legend></legend>
-            <button onClick="sendRandomLetter()">Send random letter</button>  
+            <button onClick="morseTutorUi.sendRandomLetter()">Send random letter</button>  
         </fieldset>
     </form>
     <!-- Okay, To start with I think I want to have some simple settings here:
