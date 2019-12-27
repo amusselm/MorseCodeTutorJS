@@ -8,7 +8,7 @@
 </head>
 <body>
     <p>Todo: Create code</p>
-    <form>
+    <form action="#">
         <fieldset>
             <legend>Tone Options</legend>
             <fieldset> 
@@ -29,16 +29,24 @@
                 <input type="range" id="sendSpeedRange" oninput="updateSendSpeed(this.value)"></input>
                 <input type="number" id="sendSpeedNum" oninput="updateSendSpeed(this.value)"></input>
             </fieldset>
+            <fieldset>
+                <legend>Group Size (letters)</legend>
+                <input type="number" id="sendGroupSize"></input>
+            </fieldset>
+            <fieldset>
+                <legend>Number of Groups</legend>
+                <input type="number" id="sendGroupsCount"></input>
+            </fieldset>
         </fieldset>
         <fieldset>
             <legend>Alphabet</legend>
                 <ul id="alphabet">	
-
+                    <!-- Javascript adds letters to the DOM here -->
                 </ul>
         </fieldset>
         <fieldset>
             <legend></legend>
-            <button onClick="sendRandomLetter()">Send random letter"</button>  
+            <button onClick="sendRandomLetter()">Send random letter</button>  
         </fieldset>
     </form>
     <!-- Okay, To start with I think I want to have some simple settings here:

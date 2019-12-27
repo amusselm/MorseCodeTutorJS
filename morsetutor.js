@@ -6,9 +6,16 @@ var updateVolume = function(volumeInput) {
     tone.volume = volumeInput; 
 }
 
-
 var updateSendSpeed = function(sendSpeedInput) {
     sendOptions.speed = sendSpeedInput;
+}
+
+var updateGroupSize = function(sendGroupInput) {
+    sendOptions.groupSize = sendGroupInput;
+}
+
+var updateGroupCount = function(sendGroupCountInput) {
+    sendOptions.groupCount = sendGroupCountInput;
 }
 
 var tone = {
@@ -36,6 +43,12 @@ var sendOptions = {
     speed : 15,
     maxSendSpeed : 150,
     minSendSpeed : 5,
+    groupSize: 3,
+    minGroupSize: 1,
+    maxGroupSize: 20,
+    groupCount: 1,
+    minGroupCount: 1,
+    maxGroupCount: 20,
 
     set speed(newSpeed) {
         document.getElementById("sendSpeedRange").value = newSpeed;
@@ -77,7 +90,11 @@ Letter.prototype.toggle = function() {
 
 var alphabet = [
     new Letter("a",".-"),
-    new Letter("b","-...")
+    new Letter("b","-..."),
+    new Letter("c","-.-."),
+    new Letter("d","-.."),
+    new Letter("e","."),
+    new Letter("f","..-.")
 ];
 
 var enabledAlphabet = [];
@@ -110,6 +127,13 @@ function init() {
     document.getElementById("sendSpeedRange").max = sendOptions.maxSendSpeed;
     document.getElementById("sendSpeedNum").min = sendOptions.minSendSpeed;
     document.getElementById("sendSpeedNum").max = sendOptions.maxSendSpeed;
+
+    document.getElementById("sendGroupSize").min = sendOptions.minGroupSize;
+    document.getElementById("sendGroupSize").max = sendOptions.maxGroupSize;
+    document.getElementById("sendGroupSize").value = sendOptions.groupSize;
+    document.getElementById("sendGroupsCount").min = sendOptions.minGroupCount;
+    document.getElementById("sendGroupsCount").max = sendOptions.maxGroupCount;
+    document.getElementById("sendGroupsCount").value = sendOptions.groupCount;
 
     let alphabetFieldset = document.getElementById("alphabet");
     alphabet.forEach(function(letter) {
