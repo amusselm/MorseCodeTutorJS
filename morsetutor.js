@@ -1,13 +1,19 @@
 var morseTutorUi = function() {
     var updateFrequency = function(toneInput) {
+        document.getElementById("frequencyRange").value = toneInput;
+        document.getElementById("frequencyNum").value = toneInput;
         tone.frequency = toneInput; 
     }
 
     var updateVolume = function(volumeInput) {
+        document.getElementById("volumeRange").value = volumeInput;
+        document.getElementById("volumeNum").value = volumeInput;
         tone.volume = volumeInput; 
     }
 
     var updateSendSpeed = function(sendSpeedInput) {
+        document.getElementById("sendSpeedRange").value = sendSpeedInput;
+        document.getElementById("sendSpeedNum").value = sendSpeedInput;
         sendOptions.speed = sendSpeedInput;
     }
 
@@ -26,18 +32,6 @@ var morseTutorUi = function() {
         frequencyMax : 2000,
         maxVolume : 100,
         minVolume : 0,
-
-        set frequency(newFreq) {
-            document.getElementById("frequencyRange").value = newFreq;
-            document.getElementById("frequencyNum").value = newFreq;
-            
-        },
-
-        set volume(newVolume) {
-            document.getElementById("volumeRange").value = newVolume;
-            document.getElementById("volumeNum").value = newVolume;
-        }
-
     }
 
     var sendOptions = {
@@ -50,11 +44,6 @@ var morseTutorUi = function() {
         groupCount: 1,
         minGroupCount: 1,
         maxGroupCount: 20,
-
-        set speed(newSpeed) {
-            document.getElementById("sendSpeedRange").value = newSpeed;
-            document.getElementById("sendSpeedNum").value = newSpeed;
-        }
     }
 
 
@@ -95,7 +84,37 @@ var morseTutorUi = function() {
         new Letter("c","-.-."),
         new Letter("d","-.."),
         new Letter("e","."),
-        new Letter("f","..-.")
+        new Letter("f","..-."),
+        new Letter("g","--."),
+        new Letter("h","...."),
+        new Letter("i",".."),
+        new Letter("j",".---"),
+        new Letter("k","-.-"),
+        new Letter("l",".-.."),
+        new Letter("m","--"),
+        new Letter("n","-."),
+        new Letter("o","---"),
+        new Letter("p",".--."),
+        new Letter("q","--.-"),
+        new Letter("r",".-."),
+        new Letter("s","..."),
+        new Letter("t","-"),
+        new Letter("u","..-"),
+        new Letter("v","...-"),
+        new Letter("w",".--"),
+        new Letter("x","-..-"),
+        new Letter("y","-.--"),
+        new Letter("z","--.."),
+        new Letter("0","-----"),
+        new Letter("1",".----"),
+        new Letter("2","..---"),
+        new Letter("3","...--"),
+        new Letter("4","....-"),
+        new Letter("5","....."),
+        new Letter("6","-...."),
+        new Letter("7","--..."),
+        new Letter("8","---.."),
+        new Letter("9","----.")
     ];
 
     var enabledAlphabet = [];
@@ -106,7 +125,7 @@ var morseTutorUi = function() {
             let scaledRand = rand * enabledAlphabet.length;
             let idx = Math.floor(scaledRand);
             console.log(enabledAlphabet[idx]);
-            alert(enabledAlphabet[idx].display);
+            morseSender.sendSequence(enabledAlphabet[idx].morse, sendOptions, tone);
         } else {
             alert("No letters selected");
         }
