@@ -9,8 +9,8 @@ var morseSender = function() {
     
     const sendSequence = function(sequence, sendOptions, toneOptions) {
         const dotLength = dotLengthMillis(sendOptions.speed);
-        var totalLength = 0;
-        for (var i = 0; i < sequence.length; i++) {
+        let totalLength = 0;
+        for (let i = 0; i < sequence.length; i++) {
             symbol = sequence[i];
             if (symbol === '.') {
                 totalLength += 2;//Includes dot and space after
@@ -27,7 +27,7 @@ var morseSender = function() {
         
         console.log("total dot length: " + totalLength); 
         console.log("A dot length: " + dotLength); 
-        var totalTime = (totalLength*dotLength);
+        let totalTime = (totalLength*dotLength);
         console.log("Will Send: " + sequence + " Total time:" + totalTime);
     }
 
@@ -66,7 +66,7 @@ var morseSender = function() {
      * 1 dot = 60,000 millisecons / x*56 
      * 
      */
-    var dotLengthMillis = function(wpm) {
+    const dotLengthMillis = function(wpm) {
         return MILLIS_PER_SECOND/(wpm*CODEX_DOT_LENGTH); 
     }  
 
