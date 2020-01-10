@@ -1,31 +1,31 @@
 var morseTutorUi = function() {
-    var updateFrequency = function(toneInput) {
+    const updateFrequency = function(toneInput) {
         document.getElementById("frequencyRange").value = toneInput;
         document.getElementById("frequencyNum").value = toneInput;
         tone.frequency = toneInput; 
     }
 
-    var updateVolume = function(volumeInput) {
+    const updateVolume = function(volumeInput) {
         document.getElementById("volumeRange").value = volumeInput;
         document.getElementById("volumeNum").value = volumeInput;
         tone.volume = volumeInput; 
     }
 
-    var updateSendSpeed = function(sendSpeedInput) {
+    const updateSendSpeed = function(sendSpeedInput) {
         document.getElementById("sendSpeedRange").value = sendSpeedInput;
         document.getElementById("sendSpeedNum").value = sendSpeedInput;
         sendOptions.speed = sendSpeedInput;
     }
 
-    var updateGroupSize = function(sendGroupInput) {
+    const updateGroupSize = function(sendGroupInput) {
         sendOptions.groupSize = sendGroupInput;
     }
 
-    var updateGroupCount = function(sendGroupCountInput) {
+    const updateGroupCount = function(sendGroupCountInput) {
         sendOptions.groupCount = sendGroupCountInput;
     }
 
-    var tone = {
+    const tone = {
         frequency : 440,
         volume : 15,
         frequencyMin : 15,
@@ -34,7 +34,7 @@ var morseTutorUi = function() {
         minVolume : 0,
     }
 
-    var sendOptions = {
+    const sendOptions = {
         speed : 15,
         maxSendSpeed : 150,
         minSendSpeed : 5,
@@ -69,16 +69,14 @@ var morseTutorUi = function() {
         this.enabled = !this.enabled;
         if (this.enabled) {
             enabledAlphabet.push(this); 
-            console.log(this);
         }  else {
             let idx = enabledAlphabet.indexOf(this);
             enabledAlphabet.splice(idx, 1);
         }
-        console.log(enabledAlphabet);
 
     };
 
-    var alphabet = [
+    const alphabet = [
         new Letter("a",".-"),
         new Letter("b","-..."),
         new Letter("c","-.-."),
@@ -117,14 +115,13 @@ var morseTutorUi = function() {
         new Letter("9","----.")
     ];
 
-    var enabledAlphabet = [];
+    const enabledAlphabet = [];
 
     function sendRandomLetter() {
         if (enabledAlphabet.length > 0) {
             let rand = Math.random();
             let scaledRand = rand * enabledAlphabet.length;
             let idx = Math.floor(scaledRand);
-            console.log(enabledAlphabet[idx]);
             morseSender.sendSequence(enabledAlphabet[idx].morse, sendOptions, tone);
         } else {
             alert("No letters selected");

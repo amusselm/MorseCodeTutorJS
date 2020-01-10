@@ -7,7 +7,7 @@ var morseSender = function() {
 
     const audioContext = new AudioContext();
     
-    var sendSequence = function(sequence, sendOptions, toneOptions) {
+    const sendSequence = function(sequence, sendOptions, toneOptions) {
         const dotLength = dotLengthMillis(sendOptions.speed);
         var totalLength = 0;
         for (var i = 0; i < sequence.length; i++) {
