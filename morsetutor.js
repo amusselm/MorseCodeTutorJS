@@ -36,7 +36,7 @@ var morseTutorUi = function() {
 
     const sendOptions = {
         speed : 15,
-        maxSendSpeed : 100,
+        maxSendSpeed : 60,
         minSendSpeed : 5,
         groupSize: 3,
         minGroupSize: 1,
@@ -45,7 +45,6 @@ var morseTutorUi = function() {
         minGroupCount: 1,
         maxGroupCount: 20,
     }
-
 
 
     function Letter(display, morse) {
@@ -117,16 +116,102 @@ var morseTutorUi = function() {
 
     const enabledAlphabet = [];
 
-    function sendRandomLetter() {
+    var currentSequence = [];
+    
+    /**
+     * Get a single random Letter object from the enabled alphabet.
+     */
+    function getRandomLetter() {
         if (enabledAlphabet.length > 0) {
             let rand = Math.random();
             let scaledRand = rand * enabledAlphabet.length;
             let idx = Math.floor(scaledRand);
-            morseSender.sendSequence(enabledAlphabet[idx].morse, sendOptions, tone);
+            return enabledAlphabet[idx];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Randomly generate a two dimensional array of Letters. Each
+     * element in the outer array represents a word, each element
+     * in the inner array is a Letter.
+     */
+    function generateRandomSequence() {
+        var sequence = [];
+        for(let i = 0; i < sendOptions.groupCount; i++) {
+            sequence[i] = [];
+            for (let j = 0; j < sendOptions.groupSize; j++) {
+                sequence[i][j] = getRandomLetter();
+            }
+        }
+        return sequence;
+    }
+
+    /**
+     * Generate and send a sequence of characters in the form of a morse
+     * encoded string. Replaces the stored currentSequence with the newly
+     * generated random sequence.
+     */ 
+    function sendRandomSequence() {
+        currentSequence = [];
+        if (enabledAlphabet.length > 0) {
+            currentSequence = generateRandomSequence(); 
+            document.getElementById("sequenceShow").innerText = "";
+            let morseSequence = generateMorseString(currentSequence); 
+            morseSender.sendSequence(morseSequence, sendOptions, tone);
+            
         } else {
             alert("No letters selected");
         }
     }
+
+    /**
+     * Resends the previous sequence.
+     */
+    function resendSequence() {
+        let morseSequence = generateMorseString(currentSequence); 
+        morseSender.sendSequence(morseSequence, sendOptions, tone);
+    }
+
+    /**
+     * Displays the last sent sequence. Handy for users
+     * to check their answers.
+     */
+    function showLastSequence() { 
+        let displaySequence = generateDisplayString(currentSequence);
+        document.getElementById("sequenceShow").innerText = displaySequence;
+    }
+
+    /**
+     * Turns an array of arrays of letters into a string of morse
+     * code with each word seperated by a "/".
+     */
+    function generateMorseString(sequences) {
+        let result = "";
+        for (let i = 0; i < sequences.length; i++) {
+            for (let j = 0; j < sequences[i].length; j++) {
+                let letter = sequences[i][j];
+                result = result.concat(letter.morse);
+                result = result.concat(" ");
+            } 
+            result = result.concat("/");
+        }
+        return result;
+    }
+
+    function generateDisplayString(sequences) {
+        let result = "";
+        for (let i = 0; i < sequences.length; i++) {
+            for (let j = 0; j < sequences[i].length; j++) {
+                let letter = sequences[i][j];
+                result = result.concat(letter.display);
+            } 
+            result = result.concat(" ");
+        }
+        return result;
+    }
+    
 
     function init() {
         document.getElementById("frequencyRange").min = tone.frequencyMin;
@@ -158,7 +243,7 @@ var morseTutorUi = function() {
             alphabetFieldset.appendChild(letter.getInnerHtml());
         });
 
-        //Default values, forces setters to be called. 
+        //Default values 
         updateFrequency(440);
         updateVolume(50);
         updateSendSpeed(15);
@@ -171,11 +256,11 @@ var morseTutorUi = function() {
         updateSendSpeed:updateSendSpeed,
         updateGroupSize:updateGroupSize,
         updateGroupCount:updateGroupCount,
-        sendRandomLetter:sendRandomLetter,
-        tone:tone,
-        sendOptions:sendOptions,
+        sendRandomSequence,
+        resendSequence,
         enabledAlphabet:enabledAlphabet, 
-
+        currentSequence,
+        showLastSequence,
     }
 
 }();

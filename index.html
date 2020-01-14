@@ -7,47 +7,49 @@
 <meta charset="UTF-8">
 </head>
 <body>
-    <form action="#">
-        <fieldset>
-            <legend>Tone Options</legend>
-            <fieldset> 
-                <legend>Tone (Hz)</legend>
-                <input type="range" id="frequencyRange" oninput="morseTutorUi.updateFrequency(this.value)"></input>
-                <input type="number" id="frequencyNum" oninput="updateFrequency(this.value)"></input>
-            </fieldset>
-            <fieldset>
-                <legend>Tone Volume</legend>
-                <input type="range" id="volumeRange" oninput="morseTutorUi.updateVolume(this.value)"></input>
-                <input type="number" id="volumeNum" oninput="morseTutorUi.updateVolume(this.value)"></input>
-            </fieldset>
+    <fieldset>
+        <legend>Tone Options</legend>
+        <fieldset> 
+            <legend>Tone (Hz)</legend>
+            <input type="range" id="frequencyRange" oninput="morseTutorUi.updateFrequency(this.value)"></input>
+            <input type="number" id="frequencyNum" oninput="updateFrequency(this.value)"></input>
         </fieldset>
         <fieldset>
-            <legend>Send Options</legend>
-            <fieldset>
-                <legend>Send Speed (WPM)</legend>
-                <input type="range" id="sendSpeedRange" oninput="morseTutorUi.updateSendSpeed(this.value)"></input>
-                <input type="number" id="sendSpeedNum" oninput="morseTutorUi.updateSendSpeed(this.value)"></input>
-            </fieldset>
-            <fieldset>
-                <legend>Group Size (letters)</legend>
-                <input type="number" id="sendGroupSize"></input>
-            </fieldset>
-            <fieldset>
-                <legend>Number of Groups</legend>
-                <input type="number" id="sendGroupsCount"></input>
-            </fieldset>
+            <legend>Tone Volume</legend>
+            <input type="range" id="volumeRange" oninput="morseTutorUi.updateVolume(this.value)"></input>
+            <input type="number" id="volumeNum" oninput="morseTutorUi.updateVolume(this.value)"></input>
+        </fieldset>
+    </fieldset>
+    <fieldset>
+        <legend>Send Options</legend>
+        <fieldset>
+            <legend>Send Speed (WPM)</legend>
+            <input type="range" id="sendSpeedRange" oninput="morseTutorUi.updateSendSpeed(this.value)"></input>
+            <input type="number" id="sendSpeedNum" oninput="morseTutorUi.updateSendSpeed(this.value)"></input>
         </fieldset>
         <fieldset>
-            <legend>Alphabet</legend>
-                <ul id="alphabet">	
-                    <!-- Javascript adds letters to the DOM here -->
-                </ul>
+            <legend>Group Size (letters)</legend>
+            <input type="number" id="sendGroupSize" oninput="morseTutorUi.updateGroupSize(this.value)"></input>
         </fieldset>
         <fieldset>
-            <legend></legend>
-            <button onClick="morseTutorUi.sendRandomLetter()">Send random letter</button>  
+            <legend>Number of Groups</legend>
+            <input type="number" id="sendGroupsCount" oninput="morseTutorUi.updateGroupCount(this.value)"></input>
         </fieldset>
-    </form>
+    </fieldset>
+    <fieldset>
+        <legend>Alphabet</legend>
+            <ul id="alphabet">	
+                <!-- Javascript adds letters to the DOM here -->
+            </ul>
+    </fieldset>
+    <fieldset>
+        <button onClick="morseTutorUi.sendRandomSequence()">Send new random sequence</button>  
+        <button onClick="morseTutorUi.resendSequence()">Resend Sequence</button>  
+        <button onClick="morseTutorUi.showLastSequence()">Show Last Sequence</button>  
+    </fieldset>
+    <div id="sequenceShow">
+
+    </div>
     <!-- Okay, To start with I think I want to have some simple settings here:
         - Enabled Alphabet
         - Type of example to send
