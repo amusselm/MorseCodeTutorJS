@@ -1,32 +1,60 @@
 var morseSender = function() {
-    const MILLIS_PER_SECOND = 60000;
+    const MILLIS_PER_MIN = 60000;
+    const TRANSITION_TIME = 0.001;
 
     // See the description of the dotLengthMillis for the meaning of 'CODEX' 
     // and this number
-    const CODEX_DOT_LENGTH = 56;
+    const WORD_DOT_LENGTH = 56;
+    var audioCtx;
 
-    const audioContext = new AudioContext();
     
     const sendSequence = function(sequence, sendOptions, toneOptions) {
+        const toneGain = toneOptions.volume/100;
         const dotLength = dotLengthMillis(sendOptions.speed);
+        audioCtx =  new(window.AudioContext || window.webkitAudioContext)();
+
+        let oscillator = audioCtx.createOscillator();
+        oscillator.frequency.value = toneOptions.frequency;
+        let gainNode = audioCtx.createGain();
+        //Since we can't start and top the oscillator easily, the plan is to manuplate
+        //the gain to make dots and dashes.
+        gainNode.gain.value = 0; 
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
         let totalLength = 0;
+        let runningTime = audioCtx.currentTime;
+        oscillator.start(runningTime);
         for (let i = 0; i < sequence.length; i++) {
             symbol = sequence[i];
             if (symbol === '.') {
-                totalLength += 2;//Includes dot and space after
+                //Play the dot
+                gainNode.gain.setTargetAtTime(toneGain, runningTime, TRANSITION_TIME); 
+                runningTime += (dotLength/1000);
+                gainNode.gain.setTargetAtTime(0, runningTime, TRANSITION_TIME); 
+                //Add a dot length afterwards
+                runningTime += (dotLength/1000);
+                //Includes dot and space after
+                totalLength += 2;
             } else if (symbol === '-') {
-                totalLength += 4;//Includes dash and apce after
+                //Play the dash
+                gainNode.gain.setTargetAtTime(toneGain, runningTime, TRANSITION_TIME); 
+                runningTime += (dotLength/1000)*3;
+                gainNode.gain.setTargetAtTime(0, runningTime, TRANSITION_TIME); 
+                //Add a dot length afterwards
+                runningTime += (dotLength/1000);
+                totalLength += 4;//Includes dash and sapce after
             } else if (symbol === ' ') {
+                runningTime += (dotLength/1000)*3;
                 totalLength += 3; //Space represents gaps between letters in the same word
             } else if (symbol === '/') {
+                runningTime += (dotLength/1000)*7;
                 totalLength += 7; // '/' represents seperation between words
             } else {
                 console.log("Invalid symbol:" + symbol);
             }
         }
-        
-        console.log("total dot length: " + totalLength); 
-        console.log("A dot length: " + dotLength); 
+
         let totalTime = (totalLength*dotLength);
         console.log("Will Send: " + sequence + " Total time:" + totalTime);
     }
@@ -67,7 +95,7 @@ var morseSender = function() {
      * 
      */
     const dotLengthMillis = function(wpm) {
-        return MILLIS_PER_SECOND/(wpm*CODEX_DOT_LENGTH); 
+        return MILLIS_PER_MIN/(wpm*WORD_DOT_LENGTH); 
     }  
 
     return {

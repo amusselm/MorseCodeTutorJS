@@ -36,7 +36,7 @@ var morseTutorUi = function() {
 
     const sendOptions = {
         speed : 15,
-        maxSendSpeed : 150,
+        maxSendSpeed : 100,
         minSendSpeed : 5,
         groupSize: 3,
         minGroupSize: 1,
@@ -159,9 +159,9 @@ var morseTutorUi = function() {
         });
 
         //Default values, forces setters to be called. 
-        tone.frequency = 440;
-        tone.volume = 50;
-        sendOptions.speed = 15;
+        updateFrequency(440);
+        updateVolume(50);
+        updateSendSpeed(15);
     }
 
     return {
