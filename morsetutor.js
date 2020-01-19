@@ -35,7 +35,7 @@ var morseTutorUi = function() {
     const tone = {
         frequency : 440,
         volume : 15,
-        frequencyMin : 15,
+        frequencyMin : 250,
         frequencyMax : 2000,
         maxVolume : 100,
         minVolume : 0,
@@ -43,7 +43,7 @@ var morseTutorUi = function() {
 
     const sendOptions = {
         speed : 15,
-        maxSendSpeed : 60,
+        maxSendSpeed : 40,
         minSendSpeed : 5,
         groupSize: 3,
         minGroupSize: 1,
