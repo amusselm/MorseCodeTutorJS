@@ -7,7 +7,17 @@ var morseSender = function() {
     const WORD_DOT_LENGTH = 56;
     var audioCtx;
 
-    
+    /**
+     * Stop sending morse code, now.
+     */
+    const stopSending = function() {
+        audioCtx.close();
+    }
+
+    /**
+     * Start sending the given sequence with the given options. Note that
+     * this doesn't block once all the dots and dashes are queued up.
+     */
     const sendSequence = function(sequence, sendOptions, toneOptions) {
         const toneGain = toneOptions.volume/100;
         const dotLength = dotLengthMillis(sendOptions.speed);
@@ -99,6 +109,7 @@ var morseSender = function() {
     }  
 
     return {
-        sendSequence:sendSequence,
+        sendSequence,
+        stopSending,
     } 
 }();

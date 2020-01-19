@@ -12,7 +12,7 @@
         <fieldset> 
             <legend>Tone (Hz)</legend>
             <input type="range" id="frequencyRange" oninput="morseTutorUi.updateFrequency(this.value)"></input>
-            <input type="number" id="frequencyNum" oninput="updateFrequency(this.value)"></input>
+            <input type="number" id="frequencyNum" oninput="morseTutorUi.updateFrequency(this.value)"></input>
         </fieldset>
         <fieldset>
             <legend>Tone Volume</legend>
@@ -46,6 +46,7 @@
         <button onClick="morseTutorUi.sendRandomSequence()">Send new random sequence</button>  
         <button onClick="morseTutorUi.resendSequence()">Resend Sequence</button>  
         <button onClick="morseTutorUi.showLastSequence()">Show Last Sequence</button>  
+        <button onClick="morseTutorUi.stop()">Stop Sending</button>
     </fieldset>
     <div id="sequenceShow">
 

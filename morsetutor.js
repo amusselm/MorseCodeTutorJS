@@ -1,4 +1,11 @@
 var morseTutorUi = function() {
+    /**
+     * Stop sending any currently playing sequence
+     */
+    const stop = function() {
+        morseSender.stopSending();
+    } 
+
     const updateFrequency = function(toneInput) {
         document.getElementById("frequencyRange").value = toneInput;
         document.getElementById("frequencyNum").value = toneInput;
@@ -258,6 +265,7 @@ var morseTutorUi = function() {
         updateGroupCount:updateGroupCount,
         sendRandomSequence,
         resendSequence,
+        stop,
         enabledAlphabet:enabledAlphabet, 
         currentSequence,
         showLastSequence,
